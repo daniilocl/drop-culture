@@ -66,7 +66,11 @@ As dependências estão vinculadas por número nas Issues. Ambiente e modelagem 
 
 ### Kanban
 
-GitHub Project Kanban ainda não criado: a integração desta sessão não oferece criação de Projects e o navegador não tem sessão autenticada. Fluxo proposto para quando disponível: **A fazer → Em andamento → Em revisão → Concluído**. Até lá, acompanhar pelas Issues abertas/fechadas e seus checklists.
+[Abrir Drop Culture — Kanban](https://github.com/users/daniilocl/projects/2/views/1).
+
+Quadro vinculado ao repositório com as 10 Issues existentes. Fluxo: **A fazer → Em andamento → Em revisão → Concluído**. Na configuração inicial, todas estão em A fazer; atualizar conforme o trabalho real. Consultar dependências e critérios na Issue antes de mover o cartão.
+
+O Project foi criado com visibilidade privada padrão do GitHub; o repositório continua público. O acesso ao quadro depende das permissões do Project.
 
 ## Como executar
 
