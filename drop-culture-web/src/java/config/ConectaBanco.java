@@ -10,7 +10,7 @@ public class ConectaBanco {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/empresa", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/drop_culture", "root", "");
         } catch (Exception ex) {
             System.out.println("Erro - SQL: " + ex);
         }
