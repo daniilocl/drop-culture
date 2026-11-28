@@ -23,7 +23,7 @@ public class CategoriaDAO {
 
         try {
             conexao = ConectaBanco.conectar();
-            String sql = "INSERT INTO categoria (nome, slug, descricao, publico_alvo, estilo, imagem_url, ativa, ordem_exibicao, criado_em, atualizado_em) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO categoria (nome, slug, descricao, publico_alvo, estilo, imagem_url, ativa, ordem_exibicao, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setString(1, p_cat.getNome());
@@ -67,18 +67,18 @@ public class CategoriaDAO {
                 cat.setId(rs.getInt("id_categoria"));
                 cat.setNome(rs.getString("nome"));
                 cat.setSlug(rs.getString("slug"));
-                cat.setSlug(rs.getString("descricao"));
+                cat.setDesc(rs.getString("descricao"));
                 cat.setPubl_alvo(rs.getString("publico_alvo"));
                 cat.setEstilo(rs.getString("estilo"));
                 cat.setImg_url(rs.getString("imagem_url"));
                 cat.setAtiva(rs.getBoolean("ativa"));
                 cat.setOrdem_exib(rs.getInt("ordem_exibicao"));
                 cat.setCriado_em(rs.getTimestamp("criado_em"));
+                cat.setAtualizado_em(rs.getTimestamp("atualizado_em"));
             }
 
             pstm.close();
             return cat;
-
         } catch (SQLException ex) {
             System.out.println("Erro - SQL: " + ex);
             return null;
@@ -102,13 +102,14 @@ public class CategoriaDAO {
                 cat.setId(rs.getInt("id_categoria"));
                 cat.setNome(rs.getString("nome"));
                 cat.setSlug(rs.getString("slug"));
-                cat.setSlug(rs.getString("descricao"));
+                cat.setDesc(rs.getString("descricao"));
                 cat.setPubl_alvo(rs.getString("publico_alvo"));
                 cat.setEstilo(rs.getString("estilo"));
                 cat.setImg_url(rs.getString("imagem_url"));
                 cat.setAtiva(rs.getBoolean("ativa"));
                 cat.setOrdem_exib(rs.getInt("ordem_exibicao"));
                 cat.setCriado_em(rs.getTimestamp("criado_em"));
+                cat.setAtualizado_em(rs.getTimestamp("atualizado_em"));
 
                 lstCat.add(cat);
                 nreg++;
@@ -122,7 +123,7 @@ public class CategoriaDAO {
                 return lstCat;
             }
         } catch (SQLException ex) {
-            System.out.println("Erro - SQL " + ex);
+            System.out.println("Erro - SQL: " + ex);
             return null;
         }
     }
@@ -145,15 +146,14 @@ public class CategoriaDAO {
             pstm.setInt(8, p_cat.getOrdem_exib());
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date dtCriacao = (p_cat.getCriado_em() != null) ? p_cat.getCriado_em() : new Date();
             Date dtAtualizacao = (p_cat.getAtualizado_em() != null) ? p_cat.getAtualizado_em() : new Date();
-            pstm.setString(9, sdf.format(dtCriacao));
-            pstm.setString(10, sdf.format(dtAtualizacao));
+            pstm.setString(9, sdf.format(dtAtualizacao));
+            pstm.setInt(10, p_cat.getId());
 
-            pstm.executeUpdate();
+            int result = pstm.executeUpdate();
             pstm.close();
 
-            return true;
+            return result > 0;
         } catch (SQLException ex) {
             System.out.println("Erro - SQL: " + ex);
             return false;
@@ -164,21 +164,22 @@ public class CategoriaDAO {
         Connection conexao = null;
 
         try {
+            conexao = ConectaBanco.conectar();
             String sql = "DELETE FROM categoria WHERE id_categoria = ?";
 
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, p_id);
             int result = pstm.executeUpdate();
             pstm.close();
-            
+
             if (result == 1) {
                 return true;
             } else {
                 return false;
             }
-            } catch (SQLException ex) {
-                System.out.println("Erro - SQL: " + ex);
-                return false;
+        } catch (SQLException ex) {
+            System.out.println("Erro - SQL: " + ex);
+            return false;
         }
     }
 }
